@@ -1,0 +1,271 @@
+<div class="row">
+
+  <div class="col-md-4 content-left make-me-sticky">
+    <div class="col-md-5" style="float: right;">
+      <div class="row hover-event" style="margin-top:100px; cursor: pointer;">
+        <div class="col-md-4">
+          <img src="./assets/images/faces/1.jpg" alt="" class="businessAvatar" style="padding: 1px">
+        </div>
+        <div class="col-md-8 font-position">
+          Alex Kozlov
+        </div>            
+      </div>
+      <div class="row hover-event active" style="margin-top:10px; cursor: pointer; border: 1px solid #ced4da; border-radius: 5px;">
+        <div class="col-md-4 item-position">
+          <i class="nav-icon i-Calendar ng-star-inserted" style="font-size: 25px;"></i>
+        </div>
+        <div class="col-md-7 font-position">
+          New Events
+        </div>
+      </div>
+      <div class="row hover-event" style="margin-top:10px; cursor: pointer;">
+        <div class="col-md-4 item-position">
+          <i class="nav-icon i-Email" style="font-size: 25px;"></i>
+        </div>
+        <div class="col-md-7 font-position">
+          Messages
+        </div>
+      </div>
+
+      <div class="row hover-event" style="margin-top:10px; cursor: pointer;">
+        <div class="col-md-4 item-position">
+          <i class="nav-icon i-Full-Cart ng-star-inserted" style="font-size: 25px;"></i>
+        </div>
+        <div class="col-md-7 font-position">
+          Deals
+        </div>
+      </div>
+
+      <div class="row hover-event" style="margin-top:10px; cursor: pointer;">
+        <div class="col-md-4 item-position">
+          <i class="nav-icon i-Code-Window ng-star-inserted" style="font-size: 25px;"></i>
+        </div>
+        <div class="col-md-7 font-position">
+          Activities
+        </div>
+      </div>
+
+      <div class="row hover-event" style="margin-top:10px; cursor: pointer;">
+        <div class="col-md-4 item-position">
+          <i class="nav-icon i-Mens ng-star-inserted" style="font-size: 25px;"></i>
+        </div>
+        <div class="col-md-7 font-position">
+          Groups
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card mb-4">
+      <div class="card-header">        
+      </div>
+      <div class="card-body">
+        <div class="col-md-12">
+          <div class="row">
+            <div style="width: 50px;">
+              <img src="./assets/images/faces/1.jpg" alt="" class="businessAvatar">
+            </div>
+            <div class="col-md-10">
+              <input type="text" class="form-control form-control-rounded margin" placeholder="What's on your mind, Alex?">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a class="m-4" title="Send As a Recommendation"> <i class="text-20 i-Windows-2"></i> Upload file </a>
+        <input type="file" class="custom-file-input" id="photo" accept="image/*" aria-describedby="photo" hidden>
+        <a class="m-4" title="Add to My Favorite list"> <i class="text-20 i-Like"></i> Request </a>
+        <a class="m-4" title="Add a Comment"> <i class="text-20 i-Yes"></i> Feeling </a>
+      </div>
+    </div>
+
+    <div class="card mb-4">
+      <div class="card-header" (click)="goToCompanyPage()">
+        <h2>Post Title 1</h2>
+      </div>
+      <div class="card-body">
+        <img src="./assets/images/faces/17.jpg" class="image-size" (click)="goToCompanyPage()">
+        <p> </p>
+        <div style="padding-top: 20px;">
+          <i class="text-20 i-Like" style="color: #0fe668; cursor: pointer;" (click)="modalFunction(openModal)"
+            id="modal-title"></i> 12          
+        </div>
+      </div>
+      <div class="card-footer">
+        <a class="m-3" (click)="sendRecommend()" title="Send As a Recommendation"> <i class="text-20 i-Mail-Favorite"></i> Recommend </a>
+        <a class="m-3" (click)="addMyfavorite()" title="Add to My Favorite list"> <i class="text-20 i-Like"></i> Favorite </a>
+        <a class="m-3" (click)="showComment()" title="Add a Comment"> <i class="text-20 i-Yes"></i> Comment </a>
+      </div>
+      <div>
+        <ul style="list-style-type: none; padding: 20px 0 0 20px" class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div style="width: 50px;">
+                <img src="./assets/images/faces/5.jpg" alt="" class="businessAvatar">
+              </div>
+              <div class="col-md-5">
+                <p class="comment-form">This is my first test</p>
+              </div>
+            </div>
+          </div>
+        </ul>
+        <ul style="list-style-type: none; padding: 20px 0 0 20px" class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div style="width: 50px;">
+                <img src="./assets/images/faces/2.jpg" alt="" class="businessAvatar">
+              </div>
+              <div class="col-md-6">
+                <p class="comment-form">This is my second test</p>
+              </div>
+            </div>
+          </div>
+        </ul>
+        <div class="col-md-12">
+          <div class="row" style="padding: 20px">
+            <div style="width: 50px;">
+              <img src="./assets/images/faces/1.jpg" alt="" class="businessAvatar">
+            </div>
+            <div class="col-md-10">
+              <input type="text" class="form-control form-control-rounded margin" id="Comment"
+                placeholder="Write a comment" style="float:left;" #comment>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card mb-4">
+      <div class="card-header" (click)="goToCompanyPage()">
+        <!-- <h2>Hi-Tech Social Business</h2> -->
+      </div>
+      <div class="card-body">
+        <img src="./assets/images/faces/10.jpg" class="image-size" (click)="goToCompanyPage()">
+        <div style="padding-top: 20px;">
+          <i class="text-20 i-Like" style="color: #0fe668; cursor: pointer;" (click)="modalFunction(openModal)"
+            id="modal-title"></i> 12
+        </div>
+      </div>
+      <div class="card-footer">
+        <a class="m-5" (click)="sendRecommend()" title="Send As a Recommendation"> <i
+            class="text-20 i-Mail-Favorite"></i>
+          </a>
+        <a class="m-5" (click)="addMyfavorite()" title="Add to My Favorite list"> <i class="text-20 i-Like"></i> </a>
+        <a class="m-5" (click)="showComment()" title="Add a Comment"> <i class="text-20 i-Yes"></i> </a>
+      </div>
+      <div>
+        <ul style="list-style-type: none; padding: 20px 0 0 20px" class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div style="width: 50px;">
+                <img src="./assets/images/faces/12.jpg" alt="" class="businessAvatar">
+              </div>
+              <div class="col-md-6">
+                <p class="comment-form">This is my third test</p>
+              </div>
+            </div>
+          </div>
+        </ul>
+        <div class="col-md-12">
+          <div class="row" style="padding: 20px">
+            <div style="width: 50px;">
+              <img src="./assets/images/faces/1.jpg" alt="" class="businessAvatar">
+            </div>
+            <div class="col-md-10">
+              <input type="text" class="form-control form-control-rounded margin" id="Comment"
+                placeholder="Write a comment" style="float:left;" #comment>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card mb-4">
+      <div class="card-header" (click)="goToCompanyPage()">
+        <h2> Electrons Social Business </h2>
+      </div>
+      <div class="card-body">
+        <img src="http://localhost:8080/api/displayAvatarFromFS/4.png" class="image-size" (click)="goToCompanyPage()">
+        <div style="padding-top: 20px;">
+          <i class="text-20 i-Like" style="color: #0fe668; cursor: pointer;" (click)="modalFunction(openModal)"
+            id="modal-title"></i> 12          
+        </div>
+      </div>
+      <div class="card-footer">
+        <a class="m-5" (click)="sendRecommend()" title="Send As a Recommendation"> <i
+            class="text-20 i-Mail-Favorite"></i>
+          </a>
+        <a class="m-5" (click)="addMyfavorite()" title="Add to My Favorite list"> <i class="text-20 i-Like"></i> </a>
+        <a class="m-5" (click)="showComment()" title="Add a Comment"> <i class="text-20 i-Yes"></i> </a>
+      </div>
+      <div>
+        <ul style="list-style-type: none; padding: 20px 0 0 20px" class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div style="width: 50px;">
+                <img src="./assets/images/faces/13.jpg" alt="" class="businessAvatar">
+              </div>
+              <div class="col-md-6">
+                <p class="comment-form">This is my fourth test</p>
+              </div>
+            </div>
+          </div>
+        </ul>
+        <ul style="list-style-type: none; padding: 20px 0 0 20px" class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div style="width: 50px;">
+                <img src="./assets/images/faces/15.jpg" alt="" class="businessAvatar">
+              </div>
+              <div class="col-md-6">
+                <p class="comment-form">This is my fifth test</p>
+              </div>
+            </div>
+          </div>
+        </ul>
+        <ul style="list-style-type: none; padding: 20px 0 0 20px" class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div style="width: 50px;">
+                <img src="./assets/images/faces/2.jpg" alt="" class="businessAvatar">
+              </div>
+              <div class="col-md-7">
+                <p class="comment-form">This is my sixth test</p>
+              </div>
+            </div>
+          </div>
+        </ul>
+        <div class="col-md-12">
+          <div class="row" style="padding: 20px">
+            <div style="width: 50px;">
+              <img src="./assets/images/faces/1.jpg" alt="" class="businessAvatar">
+            </div>
+            <div class="col-md-10">
+              <input type="text" class="form-control form-control-rounded margin" id="Comment"
+                placeholder="Write a comment" style="float:left;" #comment>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4 content-right  make-me-sticky">
+
+  </div>
+</div>
+
+<ng-template #openModal class="modal-dialog">
+  <div class="modal-header">
+    <i class="text-20 i-Like" style="color: #0fe668; cursor: pointer;"></i> 12
+  </div>
+  <div class="modal-body" aria-hidden="true">
+    <div class="col-md-12" style="margin-bottom: 10px;" *ngFor="let modal of modals">
+      <img src="{{modal.picture}}" style="cursor: pointer;" alt="" class="businessAvatar">
+      <a style="padding: 10px;"> {{ modal.name }} </a>
+    </div>
+  </div>
+  <div class="modal-footer">
+  </div>
+</ng-template>
+

@@ -1,0 +1,54 @@
+.logo{
+    cursor: pointer;
+}
+
+.logo img {
+    width: 75px;
+    height: 75px;
+    margin: 0 auto;
+    display: block;
+}
+
+.logo_business {
+    cursor: pointer;
+    .logo-dot {
+        width: 2px;
+        height: 2px;
+        background: #000;
+        margin: -11px -30px 0 40px;
+    }
+}
+
+.logo_business img {
+    width: 30px;
+    height: 30px;
+    margin: -15px auto;
+    display: block;
+}
+
+.dropdown-image {
+    top: 13px !important;
+    left: 30px !important;
+    width: 160px;
+    height: 80px
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+.company-point {
+    background-color: white;
+    cursor: pointer;
+    padding: 16px 16px 0 0;
+}
+
+.company-point:hover {
+    background-color: red;
+    cursor: pointer;
+    // border-bottom: 2px solid #2f47c2;
+    background: rgba(47, 71, 194, 0.1);
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    padding: 16px;
+}

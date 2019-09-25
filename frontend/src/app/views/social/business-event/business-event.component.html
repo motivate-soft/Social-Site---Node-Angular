@@ -1,0 +1,250 @@
+<div class="container">
+    <div class="breadcrumb">
+        <h1><i class="i-Calendar text-26 mr-3"></i> Event</h1>
+      
+      </div>
+      
+      <div class="separator-breadcrumb border-top"></div>
+      <div class="row">
+        <div class="col-lg-3 col-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 d-flex mb-3">
+                                    <i class="i-Calendar-4 text-26 mr-3"></i>
+                                    <h6 class="mb-0 d-flex align-center mt-auto">Event</h6>
+                                </div>
+                                <div class="col-md-12 d-flex mt-3" ngbDropdown>
+                                    <button class="btn btn-info d-flex" style="width: 100%;align-content: center;justify-content: center" id="dropdownBasic" ngbDropdownToggle>
+                                        <i class="i-Add text-16"></i>
+                                        <span class="text-14 d-flex align-center ml-3" style="color: white;">Create Event</span>
+                                    </button>
+                                    <div ngbDropdownMenu aria-labelledby="dropdownBasic" class="text-center dropdown-image">
+                                        <div class="row" style="padding-top: 5px" ngbDropdownItem (click)="addEvent(1, content)">
+                                            <div class="col-md-2">
+                                                <i class="i-Mail text-20"></i>
+                                            </div>
+                                            <div class="col-md-10" style="text-align: left">
+                                                <strong>Create Private Event</strong>
+                                                <p>Only invited guests will see this event. This host can choose to let guests invite other people.</p>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="row" style="padding-top: 5px" ngbDropdownItem (click)="addEvent(2, content)">
+                                            <div class="col-md-2">
+                                                <i class="i-Globe text-20"></i>
+                                            </div>
+                                            <div class="col-md-10" style="text-align: left">
+                                                <strong>Create Public Event</strong>
+                                                <p>Anyone can see this event and search for it, even if you're not friends.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+        <div class="col-lg-7 col-12">
+            <ngx-datatable class="material"  [rows]="events" [columnMode]="'force'" [headerHeight]="0" [footerHeight]="50" [rowHeight]="'auto'" [limit]="15">
+                <ngx-datatable-column prop="content">
+                    <ng-template let-column="column" ngx-datatable-header-template></ng-template>
+                    <ng-template let-row="row" ngx-datatable-cell-template>  
+                        <div class="card-body" style="padding: 0">
+                            <div class="row">
+                                <img src="{{ row.picture }}" class="image-size" >
+                            </div>
+                        </div>
+                        <div class="row mt-5" style="border-bottom: 2px solid #d3caca">
+                            <div class="col-md-2 col-sm-6 d-flex" style="justify-content: center;align-content: center">
+                                <h2 class="text-center"><strong style="color: red;font-size: 20px">{{row.registerMonth}}</strong><br>{{row.registerDate}}</h2>
+                            </div>
+                            <div class="col-md-10 col-sm-6 mt-1" ngbDropdown>
+                                <h3 style="font-weight: bold">{{row.name}}</h3>
+                                <p><span>{{row.property}}</span> - {{row.category}}: {{row.userName}}'s event</p>
+                                <button style="float: right" class="btn btn-outline-info m-1"><i class="i-Right"></i> Share </button>
+                                <button style="float: right" class="btn btn-outline-info m-1" *ngIf="row.businessId === myBusinessId || role == '1'" id="dropdownEdit" ngbDropdownToggle><i class="i-Edit"></i>&nbsp; Edit </button>
+                                <div ngbDropdownMenu aria-labelledby="dropdownEdit" class="text-center dropdown-edit">
+                                    <div class="row" style="padding-top: 5px" ngbDropdownItem>
+                                        <div class="col-md-4">
+                                            <i class="i-Edit text-16"></i>
+                                        </div>
+                                        <div class="col-md-8" style="text-align: left" (click)="edit(row, content)">
+                                            <button style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none;">Update</button>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row" style="padding-top: 5px" ngbDropdownItem (click)="delete(row)">
+                                        <div class="col-md-4">
+                                            <i class="i-Delete-File text-16"></i>
+                                        </div>
+                                        <div class="col-md-8" style="text-align: left">
+                                            <button style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none;">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="clear: both"></div>
+                        </div>
+                        <div class="card-footer" style="padding: 0">
+                            <div class="row" style="margin-top: 10px">
+                                <div class="col-md-1"><i class="i-Over-Time-2"></i></div>
+                                <div class="col-md-11">{{row.startDate}} - {{row.endDate}}</div>
+                            </div>
+                            <div class="row" style="margin-top: 10px">
+                                <div class="col-md-1"><i class="i-Geo21"></i></div>
+                                <div class="col-md-11">{{row.location}}</div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ngx-datatable-column>
+            </ngx-datatable>
+        </div>
+        <div class="col-lg-2 col-12"></div>
+    </div>
+</div>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">
+            <select (change)="changeProperty($event.target.value)" [value]='type'>
+                <option value="2"><i class="i-Mail text-20"></i> Create Public Event</option>
+                <option value="1"><i class="i-Add text-20"></i> Create Private Event</option>
+            </select>
+        </h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        
+    </div>
+    <div class="modal-body" aria-hidden="true">
+        <p *ngIf="type == 2"><strong>Required info</strong><br>Enter the following information to create your event.</p>
+        
+        <form [formGroup]="addEventForm">
+            <div class="row">
+                <div class="col-md-3">Event Photo <i class="i-Information"></i></div>
+                <div class="col-md-9">
+                    <label class="custom-file">
+                        <img [src]="url" height="200" style="width: 100%" id="event_img_2_upload">
+                        <input type="file" class="custom-file-input" id="photo" name="photo" accept="image/*" aria-describedby="photo" (change)="onSelectFile($event)" #photo>
+                    </label>
+                </div>
+            </div>
+            <div class="row mt-10" style="margin-top: 10px">
+                <div class="col-md-3">Category <i class="i-Information"></i></div>
+                <div class="col-md-9">
+                    <select class="form-control" formControlName="category" (ngModelChange)="validate()">
+                        <option *ngFor="let categoryitem of categoryArr" [value]="categoryitem.name">
+                            {{categoryitem.name}}
+                        </option>
+                    </select>
+                    <!-- <label *ngIf="submitted && f.category.errors && f.category.errors.required" class="feedback-error">Category is required</label> -->
+                </div>
+            </div>
+            <div class="row mt-10" style="margin-top: 10px">
+                <div class="col-md-3">Event name</div>
+                <div class="col-md-9"><input type="text" formControlName="name" class="form-control" id="name" placeholder="Add a short, clear name"></div>
+            </div>
+            
+            <div class="row mt-10" style="margin-top: 10px">
+                <div class="col-md-3">Location <i class="i-Information"></i></div>
+                <div class="col-md-9"><input type="text" formControlName="location" class="form-control" id="location"
+                    #search placeholder="Include a place of address"></div>
+                  <!-- <div id="addresses-container" *ngIf="addresses">
+                        <ul *ngFor="let address of addresses; let index = index; trackBy: trackByIndex;">
+                            <div class="line">
+                                <div class="letter-marker">{{ alphabeticLabels[index] }}</div>
+                                <div>
+                                    <li>
+                                        <div>{{ address.street }}</div>
+                                        <input class="address-complement" placeholder="Ex.: AP 65 or HOUSE 2" [(ngModel)]="addresses[index].additionalInfo">
+                                    </li>
+                                </div>
+                            </div>
+                        </ul>
+                    </div> -->
+            </div>
+
+            <!-- <div class="row">
+                    <div id="map" class="col col-xl-6 col-lg-12">
+                            <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="false">
+                  
+                                <div *ngIf="markers.length === 1">
+                                    <agm-marker [latitude]="markers[0].lat" [longitude]="markers[0].lng" [label]="markers[0].label">
+                                    </agm-marker>
+                                </div>
+                  
+                            </agm-map>
+                        </div>
+            </div> -->
+
+            <div class="row mt-10" style="margin-top: 10px">
+                <div class="col-md-3">Description <i class="i-Information"></i></div>
+                <div class="col-md-9"><textarea type="text" formControlName="description" class="form-control" id="description" placeholder="Tell people what your event is about" cols="10"></textarea></div>
+            </div>
+
+            <div class="row" style="margin-top: 15px">
+                <div class="col-md-3" style="text-align: right">Start</div>
+                <div class="col-md-9 row">
+                    <div class="col-md-6 col-sm-6 d-flex">
+                        <input id="s_dp" class="form-control" formControlName="s_dp" (change)="onDateChange($event.target.value, 1)" (dateSelect)="onDateSelect($event, 1)" placeholder="yyyy-mm-dd" name="s_dp" ngbDatepicker #s_dp="ngbDatepicker" readonly>
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" (click)="s_dp.toggle()" type="button">
+                                <i class="icon-regular i-Calendar-4"></i>
+                            </button>
+                        </div>
+                        <!-- <label *ngIf="submitted && f.s_dp.errors && f.s_dp.errors.required" class="feedback-error">Start date is required</label> -->
+                    </div>
+                    <div class="col-md-6 col-sm-6 d-flex">
+                        <select style="background: white" formControlName="s_time" id="s_time" (ngModelChange)="validate()">
+                            <option *ngFor="let time of timeArr" [value]="time.name">
+                                {{time.name}}
+                            </option>
+                        </select>
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="button">
+                                <i class="icon-regular i-Over-Time"></i>
+                            </button>
+                        </div>
+                        <!-- <label *ngIf="submitted && f.time.errors && f.time.errors.required" class="feedback-error">Time is required</label> -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 10px">
+                <div class="col-md-3" style="text-align: right">End</div>
+                <div class="col-md-9 row">
+                    <div class="col-md-6 col-sm-6 d-flex">
+                        <input id="e_dp" class="form-control" formControlName="e_dp" (change)="onDateChange($event.target.value, 2)" (dateSelect)="onDateSelect($event, 2)" placeholder="yyyy-mm-dd" name="e_dp" ngbDatepicker #e_dp="ngbDatepicker" readonly>
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" (click)="e_dp.toggle()" type="button">
+                                <i class="icon-regular i-Calendar-4"></i>
+                            </button>
+                        </div>
+                        <!-- <label *ngIf="submitted && f.e_dp.errors && f.e_dp.errors.required" class="feedback-error">End date is required</label> -->
+                    </div>
+                    <div class="col-md-6 col-sm-6 d-flex">
+                        <select style="background: white" formControlName="e_time" id="e_time" (ngModelChange)="validate()">
+                            <option *ngFor="let time of timeArr" [value]="time.name">
+                                {{time.name}}
+                            </option>
+                        </select>
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" type="button">
+                            <i class="icon-regular i-Over-Time"></i>
+                        </button>
+                    </div>
+                        <!-- <label *ngIf="submitted && f.time.errors && f.time.errors.required" class="feedback-error">Time is required</label> -->
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" [disabled]="!submitValidFlg" class="btn btn-outline-dark" (click)="modal.close('Save click')">{{modal_btn}}</button>
+    </div>
+</ng-template>

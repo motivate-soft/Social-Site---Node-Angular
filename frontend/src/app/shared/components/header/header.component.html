@@ -1,0 +1,91 @@
+<div class="main-header">
+  <div class="logo d-inline-block" ngbDropdown placement="bottom-right">
+    <img src="./assets/images/logo.png" class="logo" alt="" id="dropdownBasic2" (click)="goHome()">
+  </div>
+  <div class="logo_business d-inline-block" ngbDropdown placement="bottom-right" *ngIf="isBusiness != '1'">
+    
+    <img src="{{logoPicture}}" class="logo_business" alt="" id="dropdownBasic2" ngbDropdownToggle>
+    <div style="margin-top: 3px;">
+      <div class="logo-dot"></div>
+      <div class="logo-dot"></div>
+      <div class="logo-dot"></div>
+    </div>
+    
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="text-center dropdown-image">
+      <div ngbDropdownItem (click)="goToCompany(businessId)">Company Business</div>
+      <br/>
+      <div ngbDropdownItem (click)="goToPrivate()">Private Business</div>
+    </div>
+  </div>
+
+  <div class="menu-toggle" (click)="toggelSidebar()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <div class="">
+    <div class="search-bar">
+      <!-- <input type="text" placeholder="Search" (focus)="searchService.searchOpen = true"> -->
+      <input type="text" placeholder="Search" (focus)="focus()">
+      <i class="search-icon text-muted i-Magnifi-Glass1"></i>
+    </div>
+  </div>
+  <div style="margin: auto; cursor: pointer; color:#92d050; " (click)="goTo()">
+    About Page <i class="i-Restore-Window" style="font-size: 20px;"></i>
+  </div>
+  <div class="header-part-right">
+    <ul role="tablist" class="nav nav-tabs justify-content-start">
+      <li class="nav-item ng-star-inserted" *ngFor="let tab of tabs">
+        <a class="nav-link active_url" [ngClass]="{active: tab.active}" [routerLink]="[tab.url]" role="tab" id="ngb-tab-1"
+          aria-expanded="false" aria-disabled="false" (click)="tabfunction(tab.id)"> {{tab.title}} </a>
+      </li>
+    </ul>
+
+    <div ngbDropdown [placement]="'bottom-right'" class="">
+      <div class="badge-top-container">
+        <span class="badge badge-primary">{{notifications.length}}</span>
+        <i class="i-Bell text-muted header-icon" id="dropdownBasic1" ngbDropdownToggle></i>
+      </div>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="notification-dropdown" style="width: auto;box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.14);" perfectScrollbar>
+        <div style="padding: 5px"><strong style="font-size: 20px">Notifications</strong></div>
+        <div class="dropdown-item d-flex" *ngFor="let item of notifications" [routerLink]="[item.link]"> 
+          <div class="notification-icon" style="padding: 10px;width: 70px">
+            <img src="{{item.picture}}" style="border-radius: 50%;">
+          </div>
+          <div class="notification-details flex-grow-1">
+            <!-- To <span style="color: blue">{{item.title | excerpt:30}}</span><br> -->
+            <h4 class="m-0 d-flex align-items-center">
+              <strong>{{item.text | excerpt:30}} </strong>&nbsp;{{item.title}} &nbsp;<br>
+              <span *ngIf="item.badge" class="badge badge-pill badge-{{item.status}} ml-1 mr-1">{{item.badge}}</span> 
+              <span class="flex-grow-1"></span>
+              <i style="font-size: 22px" class="{{item.icon}} text-{{item.status}} mr-1"></i>
+            </h4>
+            <p class="text-small text-muted m-0"><span class="text-small text-muted mr-4">{{item.time | relativeTime}}</span></p>
+          </div>
+        </div>        
+      </div>
+    </div>
+
+    <div>
+      <a class="company-point">Company Points</a>
+    </div>
+     
+    
+
+    <div ngbDropdown [placement]="'bottom-right'" class="user col">
+      <img src="{{picture}}" id="userDropdown" ngbDropdownToggle alt="">
+
+      <div ngbDropdownMenu aria-labelledby="userDropdown">
+        <div class="dropdown-header">
+          <i class="i-Lock-User mr-1"></i> {{userName}}
+        </div>
+        <button class="dropdown-item" (click)="profileChange()">Account settings</button>
+        <button class="dropdown-item" *ngIf="isRegister" (click)="goToAddBusiness()">My business</button>
+        <button class="dropdown-item" (click)="signout()">Sign out</button>
+      </div>
+    </div>
+    
+  </div>
+
+</div>

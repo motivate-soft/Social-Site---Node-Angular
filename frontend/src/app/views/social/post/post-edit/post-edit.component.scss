@@ -1,0 +1,113 @@
+.row {
+    flex: 0 0 66.66666667%;
+    margin: auto;    
+}
+
+.row a:hover {
+    color: #0fe668;
+    cursor: pointer;
+}
+
+.card-header {
+    text-align: center;
+    cursor: pointer;
+}
+
+.card-footer {
+    text-align: center;
+}
+
+.content-right {
+    background-color: rgb(247, 247, 248);
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 868.5px;
+    border-radius: 8px;
+}
+
+.content-left {
+    background-color: rgb(247, 247, 248);
+	top: 0;
+	left: 0;
+	width: 100%;
+    height: 868.5px;
+    border-radius: 8px;
+}
+
+.image-size {
+    width: 100%;
+    height: 400px;
+    cursor: pointer;
+}
+
+h2 {
+    margin: 12px;
+}
+
+h2:hover {
+    color: red;
+}
+
+.businessAvatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.modal-body {
+    height: 300px;
+    overflow-y: scroll; 
+    max-height:85%;  
+}
+
+.comment-form {
+    border: initial;
+    outline: initial !important;
+    background: #f8f9fa;
+    color: #474d6d;
+    border-radius: 20px;
+    height: calc(1.9695rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 0.813rem;
+    line-height: 1.5;
+    background-clip: padding-box;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.make-me-sticky {
+	position: sticky;
+}
+
+.event-text {
+    border: initial; 
+    outline: initial !important; 
+    background: #f8f9fa; 
+    color: #474d6d; 
+    border-radius: 20px;        
+    height: calc(1.9695rem + 2px); 
+    padding: 0.375rem 0.75rem; 
+    font-size: 0.813rem; 
+    line-height: 1.5; 
+    background-clip: padding-box;
+}
+
+.hover-event:hover {
+    background-color: white;
+    border-radius: 5px;
+}
+.active{
+    background-color: white;
+}
+
+.item-position {
+    width: 36px; 
+    height: 36px; 
+    display: flex; 
+    align-items: center;
+}
+
+.font-position {
+    display: flex; 
+    align-items: center;
+}

@@ -1,0 +1,294 @@
+<h1> Company Business Page </h1>
+<div class="separator-breadcrumb border-top"></div>
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="card side">
+      <div class="card-body">
+        <div class="card-title text-center"> {{ currentCompanyData.businessName | uppercase }} </div>
+        <img src="{{ currentCompanyData.picture }}" style="width: 100%; height: 518px; margin-bottom: 20px;">
+        <p style="font-family: cursive;"> {{ description }} </p>
+        <a class='text-primary' style="float:right; cursor: pointer; margin-right: 40px;" (click)='readMore(true)'
+          [hidden]='!showMore'>{{'Read more'}}</a>
+        <a class='text-primary' style="float:right; cursor: pointer; margin-right: 40px;" (click)='readMore(false)'
+          [hidden]='!showLess'>{{'Show Less'}}</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-title">Company employees <i class="i-Add" *ngIf="userId === customerId" (click)="openModal(modalEmployee)" title="Add"> </i></div>
+        <ngx-datatable #table class='material' [columns]="columns_employees" [columnMode]="'force'" [headerHeight]="50"
+          [footerHeight]="50" [rowHeight]="'50'" [limit]="10" [rows]='company_employees '>
+        </ngx-datatable>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+    <div class="card side">
+      <div class="card-body">
+        <div class="card-title"> Market deal that the business offers <i class="i-Add" *ngIf="userId === customerId" (click)="openTransactionModal(modalTransaction)" title="Add"> </i></div>
+        <ngx-datatable class="material"  [rows]="business_offers" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]="10">
+            <ngx-datatable-column prop="content">
+              <ng-template let-column="column" ngx-datatable-header-template>Offer Name</ng-template>
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row.name}}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="content">
+                <ng-template let-column="column" ngx-datatable-header-template>Offer Number</ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{row.number}}
+                </ng-template>
+              </ngx-datatable-column>
+            <ngx-datatable-column prop="content">
+              <ng-template let-column="column" ngx-datatable-header-template>Offer Link</ng-template>
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <div class="row" *ngIf="userId === customerId">
+                  <div class="col-sm-8"><a href="mailto: {{row.link}}">{{row.link}}</a></div>
+                  <div class="col-sm-4">
+                    <button *ngIf="userId === customerId" (click)="deleteBusinessTransaction(modalTransactionDelete, row.name)" style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none;"><i class="i-Close-Window" title="Delete"> </i></button>
+                  </div>
+                </div>
+                <div class="row" *ngIf="userId !== customerId">
+                    <div class="col-sm-12"><a href="mailto: {{row.link}}">{{row.link}}</a></div>
+                  </div>
+              </ng-template>
+            </ngx-datatable-column>
+        </ngx-datatable> 
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card side">
+      <div class="card-body">
+        <div class="card-title"> Our events <i class="i-Add" *ngIf="userId === customerId" (click)="goToEvent(id)" title="Add"> </i></div>
+        <ngx-datatable class="material"  [rows]="business_events" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'50'" [limit]="10">
+          <ngx-datatable-column prop="content">
+            <ng-template let-column="column" ngx-datatable-header-template>Name</ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.name}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column prop="content">
+            <ng-template let-column="column" ngx-datatable-header-template>Description</ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <div class="row" *ngIf="userId === customerId">
+                <div class="col-sm-9"><span (click)="goToEvent(row.businessId)" style="color: blue;cursor: pointer;">{{row.description | excerpt:30}}</span></div>
+                <div class="col-sm-3">
+                  <button *ngIf="userId === customerId" (click)="deleteBusinessEvent(modalEventDelete, row)" style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none;"><i class="i-Close-Window" style="font-size: 22px" title="Delete"> </i></button>
+                </div>
+              </div>
+              <div class="row" *ngIf="userId !== customerId">
+                <div class="col-sm-12"><span (click)="goToEvent(row.businessId)" style="color: blue;cursor: pointer;">{{row.description | excerpt:30}}</span></div>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">    
+    <div class="card side">
+      <div class="card-body">
+        <div class="card-title"> Company information </div>
+        <ngx-datatable #table class='material' [columns]="columns_information" [columnMode]="'force'" [headerHeight]="50"
+          [footerHeight]="50" [rowHeight]="'50'" [limit]="10" [rows]='company_information'>
+        </ngx-datatable>
+      </div>
+    </div>    
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <h2 class="text-center"> Company's Products <i class="i-Add" *ngIf="userId === customerId" (click)="openProductModal(productModal)" title="Add"></i></h2>
+    <div class="row">
+      <div class="col-md-4" *ngFor="let item of company_product">
+        <div class="card mb-6 o-hidden card-body table_shadow" style="margin: 15px 0">
+          <img alt="dsada" class="card-img-top" src="{{item.picture}}">
+          <div class="card-body">
+            <h4>{{item.name | excerpt:50}}</h4>
+            <button *ngIf="userId === customerId" (click)="deleteBusinessProduct(modalProductDelete, item.name)" style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none;float:right">
+              <i class="i-Close-Window" title="Delete"> </i>
+            </button>
+          </div>
+          <div style="clear: both"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalEmployee let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add new employee</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="addEmployeeForm" novalidate="" class="ng-untouched ng-pristine ng-valid">
+      <div class="form-group">
+        <label for="picker1">Name: </label>
+        <input type="text" formControlName="name" class="form-control form-control-rounded" id="name" (ngModelChange)="validate()">
+        <label *ngIf="submitted && f.name.errors && f.name.errors.required" class="feedback-error">Name is required</label>
+      </div>
+      <div class="form-group">
+        <label for="picker1">Role: </label>
+        <input type="text" formControlName="role" class="form-control form-control-rounded" id="role" (ngModelChange)="validate()">
+        <label *ngIf="submitted && f.role.errors && f.role.errors.required" class="feedback-error">Role is required</label>
+      </div>
+      <div class="form-group">
+        <label for="picker1">Phone number: </label>
+        <input type="text" formControlName="phone" class="form-control form-control-rounded" id="phone" [textMask]="{mask: phoneMask}" (ngModelChange)="validate()">
+        <label *ngIf="submitted && f.phone.errors && f.phone.errors.required" class="feedback-error">Phone is required</label>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button"  class="btn btn-outline-dark btn-rounded" (click)="modal.close('ok')">Ok</button>
+  </div>
+</ng-template>
+
+<ng-template #modalEvent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add new event</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="addEventForm" novalidate="" class="ng-untouched ng-pristine ng-valid">
+      <div class="form-group">
+        <label for="picker1">Name: </label>
+        <input type="text" formControlName="name" class="form-control form-control-rounded" id="name" (ngModelChange)="validate()">
+        <label *ngIf="submitted && f.name.errors && f.name.errors.required" class="feedback-error">Name is required</label>
+      </div>
+      <div class="form-group">
+        <label for="picker1">Link: </label>
+        <input type="email" formControlName="link" class="form-control form-control-rounded" id="link" (ngModelChange)="validate()" required>
+        <label *ngIf="submitted && f.role.errors && f.role.errors.required" class="feedback-error">Link is required</label>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button"  class="btn btn-outline-dark btn-rounded" (click)="modal.close('ok')">Add</button>
+  </div>
+</ng-template>
+
+<ng-template #modalTransaction let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add new offer</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="addTransactionForm" novalidate="" class="ng-untouched ng-pristine ng-valid">
+        <div class="form-group">
+          <label for="picker1">Name: </label>
+          <input type="text" formControlName="name" class="form-control form-control-rounded" id="name" (ngModelChange)="validate()">
+          <label *ngIf="submitted && f.name.errors && f.name.errors.required" class="feedback-error">Name is required</label>
+        </div>
+        <div class="form-group">
+          <label for="picker1">Number: </label>
+          <input type="number" formControlName="number" class="form-control form-control-rounded" id="number" (ngModelChange)="validate()" required>
+          <label *ngIf="submitted && f.number.errors && f.number.errors.required" class="feedback-error">Number is required</label>
+        </div>
+        <div class="form-group">
+            <label for="picker1">Link: </label>
+            <input type="text" formControlName="link" class="form-control form-control-rounded" id="link" (ngModelChange)="validate()" required>
+            <label *ngIf="submitted && f.link.errors && f.link.errors.required" class="feedback-error">Link is required</label>
+          </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button"  class="btn btn-outline-dark btn-rounded" (click)="modal.close('ok')">Add</button>
+    </div>
+</ng-template>
+
+<ng-template #modalEventDelete let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Confirm Dialog</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      Are you sure?
+    </div>
+    <div class="modal-footer">
+      <button type="button"  class="btn btn-outline-dark btn-rounded" (click)="modal.close('ok')">Delete</button>
+      <button type="button"  class="btn btn-outline-dark btn-rounded" (click)="modal.dismiss('Cross click')">Cancel</button>
+    </div>
+</ng-template> 
+
+<ng-template #modalTransactionDelete let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Confirm Dialog</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      Are you sure?
+    </div>
+    <div class="modal-footer">
+      <button type="button"  class="btn btn-outline-dark btn-rounded" (click)="modal.close('ok')">Delete</button>
+      <button type="button"  class="btn btn-outline-dark btn-rounded" (click)="modal.dismiss('Cross click')">Cancel</button>
+    </div>
+</ng-template> 
+
+<ng-template #productModal let-modal>
+  <div class="modal-header">
+      <h5 class="modal-title" id="modal-basic-title">
+          Add your products
+      </h5>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+      </button>
+      
+  </div>
+  <div class="modal-body" aria-hidden="true">
+      
+      <form [formGroup]="addProductForm">
+          <div class="row">
+              <div class="col-md-3">Product photo</div>
+              <div class="col-md-9">
+                  <label class="custom-file">
+                      <img [src]="url" height="200" style="width: 100%" id="event_img_2_upload">
+                      <input type="file" class="custom-file-input" id="photo" name="photo" accept="image/*" aria-describedby="photo" (change)="onSelectFile($event)" #photo>
+                  </label>
+              </div>
+          </div>
+          
+          <div class="row mt-10" style="margin-top: 10px">
+              <div class="col-md-3">Product name</div>
+              <div class="col-md-9"><input type="text" formControlName="name" class="form-control" id="name" placeholder="Please enter product's name"></div>
+          </div>
+      </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Add</button>
+  </div>
+</ng-template>
+
+<ng-template #modalProductDelete let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Confirm Dialog</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Are you sure?
+  </div>
+  <div class="modal-footer">
+    <button type="button"  class="btn btn-outline-dark btn-rounded" (click)="modal.close('ok')">Delete</button>
+    <button type="button"  class="btn btn-outline-dark btn-rounded" (click)="modal.dismiss('Cross click')">Cancel</button>
+  </div>
+</ng-template> 

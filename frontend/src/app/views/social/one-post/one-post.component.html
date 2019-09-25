@@ -1,0 +1,199 @@
+<div class="container">
+  <div class="breadcrumb">
+      <h1><i class="i-Post-Sign text-26 mr-3"></i> <b>{{companyName}}</b> - Post</h1>
+    
+    </div>
+    
+    <div class="separator-breadcrumb border-top"></div>
+    <div class="row">
+      <div class="col-lg-2 col-12">
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="card mb-4">
+                      <div class="card-body">
+                          <div class="row">
+                              <div class="col-md-12 d-flex mb-3">
+                                  <i class="i-Post-Sign text-26 mr-3"></i>
+                                  <h6 class="mb-0 d-flex align-center mt-auto">Post</h6>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>  
+      <div class="col-lg-10 col-12">
+      <ngx-datatable class="material"  [rows]="post" [columnMode]="'force'" [headerHeight]="0" [footerHeight]="50" [rowHeight]="'auto'" [limit]="15">
+          <ngx-datatable-column prop="content">
+            <ng-template let-column="column" ngx-datatable-header-template></ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                <div class="card-header row" (mouseover)="noneDisplayFavorite()">
+                    <div class="col-md-4" style="text-align: left;color: blue">
+                      <i class="i-Add"></i> <small> {{ row.companyName }}</small> <br><span style="color: darkgray">{{ row.category }}, {{ row.country }}</span><br>
+                    </div>
+                    <div class="col-md-4"><h2>{{row.postTitle}}</h2></div>
+                    <div class="col-md-4" style="text-align: right">
+                      <img src="{{ row.companyLogo }}" class="logo_business" (click)="goToBusiness(row.businessId)" *ngIf="row.companyLogo !== ''">
+                    </div>
+                </div>
+                
+                <div class="card-body" (mouseover)="noneDisplayFavorite()">
+                    <div style="padding-top: 20px;">
+                      <h3 style="color: gray">{{row.postDescriptionTitle}}</h3>
+                      <h5>{{row.postDescription}}</h5>
+                    </div>
+                    <div class="row" *ngIf="row.offerType === 'gold'; else nonGold">
+                      
+                        <img src="{{ row.picture }}" [class]="(row.isPicture != 'none' && row.isVideo != 'none')? 'image-size-harf':'image-size'" *ngIf="row.isPicture != 'none'">
+                        <div [class]="(row.isPicture != 'none' && row.isVideo != 'none')? 'image-size-harf':'image-size'" id="visor-video" *ngIf="row.isVideo != 'none'">
+                          <iframe height="400" width="100%" [src] = "row.video"></iframe>
+                        </div>
+                    </div>
+                    <ng-template #nonGold>
+                      <div class="row">
+                          <div class="col-md-6 col-lg-6">
+                              <img src="{{ row.picture }}" [class]="(row.isPicture != 'none' && row.isVideo != 'none')? 'image-size-harf':'image-size'" *ngIf="row.isPicture != 'none'">
+                              <div [class]="(row.isPicture != 'none' && row.isVideo != 'none')? 'image-size-harf':'image-size'" *ngIf="row.isVideo != 'none'">
+                                <iframe height="400" width="100%" [src] = "row.video"></iframe>
+                              </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                <!-- <h3 style="color: gray">{{row.postDescriptionTitle}}</h3>
+                                <h5>{{row.postDescription}}</h5> -->
+                            </div>
+                      </div>
+                    </ng-template>
+                    <!-- <div style="padding-top: 20px;" *ngIf="row.offerType === 'gold'">
+                      <h3 style="color: gray">{{row.postDescriptionTitle}}</h3>
+                      <h5>{{row.postDescription}}</h5>
+                    </div> -->
+                    <div style="padding-top: 20px;" class="favorite-divs">
+                        <div>
+                            <img *ngIf="row.countLike > 0" src="../../../../assets/images/post/like.gif" title="{{row.countLike}} users">
+                            <img *ngIf="row.countLove > 0" src="../../../../assets/images/post/love.gif" title="{{row.countLove}} users">
+                            <img *ngIf="row.countHaha > 0" src="../../../../assets/images/post/haha.gif" style="width: 30px;height:30px" title="{{row.countHaha}} users">
+                            <img *ngIf="row.countWow > 0" src="../../../../assets/images/post/wow.gif" style="width: 30px;height:30px" title="{{row.countWow}} usres">
+                            <img *ngIf="row.countSad > 0" src="../../../../assets/images/post/sad.gif" style="width: 35px;height:35px" title="{{row.countSad}} users">
+                            <img *ngIf="row.countAngry > 0" src="../../../../assets/images/post/angry.gif" title="{{row.countAngry}} users">
+                            <span *ngIf="row.countAll > 0 && row.myFavorite" style="font-size: 20px">You and {{ row.countAll }} ohters</span>
+                            <span *ngIf="row.countAll > 0 && !row.myFavorite" style="font-size: 20px">{{ row.countAll }}</span>
+                          </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 like-img" id="{{ row._id }}" (mouseleave)="noneDisplayFavorite()">
+                        <button style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none">
+                            <img src="../../../../assets/images/post/like.gif" class="like" title="Like">
+                        </button>
+                        <button title="Love" style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none">
+                            <img src="../../../../assets/images/post/love.gif" class="love">
+                        </button>
+                        <button style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none">
+                            <img src="../../../../assets/images/post/haha.gif" class="haha" style="width: 35px;height: 35px" title="Haha">
+                        </button>
+                        <button style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none">
+                            <img src="../../../../assets/images/post/wow.gif" class="wow" style="width: 35px;height: 35px" title="Wow">
+                        </button>
+                        <button style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none">
+                            <img src="../../../../assets/images/post/sad.gif" class="sad" style="width: 40px;height: 40px" title="Sad">
+                        </button>
+                        <button style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none">
+                            <img src="../../../../assets/images/post/angry.gif" class="angry" title="Angry">
+                        </button>
+                        
+                    </div>
+                    <div class="col-md-7"></div>
+                </div>
+                <div class="card-footer">
+                    <a title="Add to My Favorite list" > 
+                        <button [disabled]="true" style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none;">
+                          <i class="{{ row.favoriteButtonClass }}"></i>  Add to favorite
+                        </button>
+                    </a>
+                       
+                    <!-- <ng-template #myself> *ngIf="row.id !== customerId; else myself" // {{ row.favoriteButton }}
+                      <a title="Add to My Favorite list" style="color: lightblue"> <i class="text-20 i-Like"></i> Add to My Favorite </a>
+                    </ng-template> -->
+                    <a title="Add a Comment" (click)="showComment(row._id)"> <i class="text-20 i-Yes"></i> Comments </a>
+                    <a title="Send as a recommendation" *ngIf="row.id !== customerId">
+                      <button [disabled]="row.sendRecomContent == 'Send recommendation'" style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none;">
+                          <i class="text-20 i-Mail-Favorite"></i> 
+                          <span class="badge badge-pill badge-info badge-position">{{row.countRecomment}}</span> &nbsp;&nbsp;
+                          {{row.sendRecomContent}} 
+                      </button>
+                    </a>
+                </div>
+                <div>                             
+                  <div *ngIf="selectedCommentId === row._id">
+                      <ul style="list-style-type: none; padding: 20px 0 0 20px" *ngFor="let comment of row.postComments" class="row">
+                          <div class="col-md-12">
+                            <div class="row">
+                              <div style="width: 50px;">
+                                <img src="{{comment.commentUserPicture}}" alt="" title="{{comment.commentUserName}}" class="businessAvatar">
+                              </div>              
+                              <div class="col-md-3">
+                                <p class="comment-form">{{comment.comment}}</p>
+                              </div>
+                            </div>
+                          </div>
+                      </ul>
+                  </div>
+                  <!-- <div class="col-md-12" [class.disabled]="selectedCommentId !== row._id && row.id !== customerId">
+                      <div class="row" style="padding: 20px">
+                        <div style="width: 50px;">
+                          <img src="{{ userPicture }}" alt="" class="businessAvatar">
+                        </div>
+                        <div class="col-md-11">
+                          <input type="text" class="form-control form-control-rounded margin" id="comment_{{row._id}}" placeholder="Write a comment"
+                            style="float:left;">
+                        </div>
+                      </div>
+                  </div> -->
+                </div>
+            </ng-template>
+          </ngx-datatable-column>
+      </ngx-datatable>
+      </div>
+  </div>
+</div>
+<ng-template #openModal class="modal-dialog">
+  <div class="modal-header">
+    <div style="width: 36px; height: 32px;">
+      <i class="text-20 i-Like" style="color: #0fe668; cursor: pointer;"
+        id="modal-title"></i> &nbsp;
+      <span class="badge badge-success badge-position">12</span>
+    </div>
+  </div>
+  <div class="modal-body" aria-hidden="true">
+    <div class="col-md-12" style="margin-bottom: 10px;" *ngFor="let modal of modals">
+      <img src="{{modal.picture}}" style="cursor: pointer;" alt="" class="businessAvatar">
+      <a style="padding: 10px;"> {{ modal.name }} </a>
+    </div>
+  </div>
+  <div class="modal-footer">
+  </div>
+</ng-template>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Check Businesses</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" aria-hidden="true">
+    <div class="col-md-12" style="margin-bottom: 10px;" *ngFor="let modal of modals">
+      <img src="{{modal.businessPicture}}" style="cursor: pointer;" alt="" class="businessAvatar" *ngIf="selectedUserId !== modal.userId">
+      <a style="padding: 10px;" *ngIf="selectedUserId !== modal.userId"> {{ modal.businessName }} </a>
+      <input type="checkbox" [(ngModel)]="modal.isChecked" *ngIf="selectedUserId !== modal.userId" (change)="onChange(modal, $event.target.checked)" (mouseover)="checkBoxFilter(modal.isChecked)" style="float: right">
+    </div>
+    <div *ngIf="businessFriendsCount === 0">
+      <h3 style="color: lightblue;text-align: center">You have no data of your friends' businesses yet.</h3><br><br>
+      <h3 style="text-align: center">Can you only send a recommendation with your business?</h3>
+    </div>
+    <div style="clear: both"></div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Submit</button>
+  </div>
+</ng-template>

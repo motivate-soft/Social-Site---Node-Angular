@@ -1,0 +1,89 @@
+<div class="breadcrumb">
+  <h1>Create Businesses Dummy Data</h1>
+</div>
+
+<div class="separator-breadcrumb border-top"></div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="card-title mb-3">
+          Load Businesses Dummy Data from Local Jsons
+        </div>
+        <div class="row">
+          <button type="button" class="btn btn-primary btn-lg btn-rounded m-1" (click)="onDummyUpload()">
+            <i class="i-Data-Download"></i>&nbsp; Initial Load from Json</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="card-title mb-3">Upload Dummy Businesses</div>
+
+        <div class="row">
+
+          <div class="col-md-6">
+            <label for="picture">Please Choose Businesses Count Per Business</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupFileAddon01">Businesses</span>
+              </div>
+              <div class="custom-file">
+                <input type="number" [(ngModel)]="businessCount" class="form-control" id="businessCount"
+                  placeholder="Enter business Count" min='1'>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <br>
+            <button type="button" class="btn btn-primary btn-lg btn-rounded m-1" (click)="onDummyCreate()">
+              <i class="i-Data-Save"></i>&nbsp; Create Dummy Businesses</button>
+              <img *ngIf="loading" class="pl-3" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+          </div>
+
+          <button class="btn btn-outline-primary btn-rounded" [hidden]="true" #smallModal_view [class.show]="false"
+            (click)="openSmall(modalSmall)">Launch Modal</button>
+            
+          <ng-template #modalSmall let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-basic-title">Save</h4>
+              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Saved Successfully.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close('ok')">Ok</button>
+            </div>
+          </ng-template>
+
+          <button class="btn btn-outline-primary btn-rounded" [hidden]="true" #errorModal_view [class.show]="false"
+            (click)="openSmall(modalError)">Launch Modal</button>
+
+          <ng-template #modalError let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-basic-title"><i class="i-Idea"></i>Error</h4>
+              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Not found Data for Creating dummy Businesses on MongoDB. Please Click "Initial Load from Json".
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close('ok')">Ok</button>
+            </div>
+          </ng-template>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

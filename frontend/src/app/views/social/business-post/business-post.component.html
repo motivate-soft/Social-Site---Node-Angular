@@ -1,0 +1,459 @@
+<div class="row">
+  <div class="col-md-3 content-left make-me-sticky" (mouseover)="noneDisplayFavorite()">
+    <div class="col-md-12" style="float: right;">
+      
+      <div class="row hover-event" style="margin-top: 20px;">
+        <div class="col-md-4 item-position">
+          <i class="nav-icon i-size i-Map-Marker"></i> &nbsp; Country 
+        </div>
+        <div class="col-md-8 font-position">
+          <ss-multiselect-dropdown [ngbPopover]="searchUserData.country" triggers="mouseenter:mouseleave" 
+            popoverTitle="Selected Locations" [texts]="countryTexts" [settings]="countrySettings" [options]="countryOptions"
+            [(ngModel)]="countryModel" (ngModelChange)="onChangeCountry($event)" style="width: calc( 100% - 78px );z-index: 999">
+          </ss-multiselect-dropdown>           
+        </div>
+      </div>
+            
+      <div class="row hover-event">
+        <div class="col-md-4 item-position">
+          <i class="nav-icon i-size i-Atom"></i> &nbsp; Category
+        </div>
+        <div class="col-md-8 font-position">
+          <ss-multiselect-dropdown [ngbPopover]="searchUserData.category" triggers="mouseenter:mouseleave"
+            popoverTitle="Selected Categories" [texts]="categoryTexts" [settings]="categorySettings" [options]="categoryOptions"
+            [(ngModel)]="categoryModel" (ngModelChange)="onChangeCategory($event)" style="width: calc( 100% - 78px )">
+          </ss-multiselect-dropdown>
+        </div>
+      </div>
+
+      <div class="row hover-event" *ngIf="customerId !== '-1'">
+        <div class="col-md-12 item-position" *ngIf="businessId" (click)="goToEvent(businessId)">
+          <i class="nav-icon i-size i-Calendar-4"></i> &nbsp; Add My Event
+        </div>
+        <div class="col-md-12">
+          <textarea class="advertisment-size" id="advertisment" (change)="addEvent($event.target.value)" placeholder="Advertisment place"></textarea>
+        </div>        
+      </div>
+      
+      <div class="row hover-event">
+        <div class="col-md-12 item-position">
+          <i class="nav-icon i-size i-Internet"></i> &nbsp; Business Online
+          <div class="col-md-2">
+            <span class="badge badge-success" style="font-size: 14px;"> {{onlineBusiness?.length}} </span>
+          </div> 
+        </div>
+        <div class="col-md-12">
+          <div class="online-size" *ngIf="customerId !== '-1'">
+            <table class="table">
+              <tbody *ngFor="let business of onlineBusiness">
+                <tr>
+                  <td> <a (click)="goToBusiness(business._id)"> {{business.businessName}} </a> </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>          
+        </div>
+        <div class="col-md-12 item-position">
+          <i class="nav-icon i-size i-Internet"></i>
+          &nbsp; User Online
+          <div class="col-md-2">
+            <span class="badge badge-info" style="font-size: 14px;"> {{onlineUser}} </span>
+          </div> 
+        </div>
+        <div class="col-md-12">
+          <div class="online-size" *ngIf="customerId !== '-1'">
+            <table class="table">
+              <tbody *ngFor="let user of onlineUsers">
+                <tr>
+                  <td style="cursor: unset"> {{user.firstName}} {{user.lastName}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>          
+        </div>
+      </div>      
+      
+      <table class="table table-hover" style="margin-top: 50px;">
+        <thead>
+          <tr>
+            <th style="text-align: center">Hundreds participate in Agricultural Week</th>            
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Type of specialization(This is test)</td>
+          </tr>
+          <tr>
+            <td>(This is test)Business area of activity</td>
+          </tr>
+          <tr>
+            <td>($7000)Budget</td>
+          </tr>
+          <tr>
+            <td>(This is test)Activity area</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+  </div>
+
+  <div class="col-md-6" >
+    <div class="card mb-4" (mouseover)="noneDisplayFavorite()" *ngIf="isRegister">
+      <div class="card-header">
+        <p><span (click)="openPost()" style="float: left">{{ toolTitle }} Post</span><img [class.disabled]='!divDisabled' src="../../../../assets/multiply-24.png" style="width: 20px;float:right" (click)="closePost()"></p>       
+        <div style="clear: both"></div>
+      </div>
+      <div class="card-body" [class.disabled]='!divDisabled'>
+        <div class="col-md-12">
+          <div class="row">
+            <div style="width: 50px;">
+              <img src="{{userPicture}}" alt="" class="businessAvatar">
+            </div>
+            <div class="col-md-10">
+              <input type="text" class="form-control form-control-rounded margin" id="postTitle" style="border: 1px solid transparent" placeholder="What's on your mind, {{userName}}?" #postTitle>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+              <div class="col-md-6 col-lg-6">
+                  <img [src]="url" height="200" *ngIf="url" style="padding: 15px"><br/> 
+                </div>
+                <div class="col-md-6 col-lg-6">
+                  <div id="visor-video" *ngIf="video" style="padding: 15px">
+                    <iframe [src] = "displayURL" height="200"></iframe>
+                  </div>
+                </div>
+          </div>
+        </div>
+        <div class="col-md-12 mb-3" [class.disabled]='!isMovie'>
+          <label for="video">Video</label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon3">https://www.youtube.com/embed/</span>
+            </div>
+            <input class="form-control" type="text" id="basic-url" (keyup)="previewVideo($event.target.value)" aria-describedby="basic-addon3" placeholder="Ex: 5WICgADzDqw" #inputVideoUrl>
+          </div>
+        </div>
+        <div class="col-md-12" [class.disabled]='!isRequest'>
+          <div class="input-group mb-3">
+            <div class=""input-group-prepend>
+              <span class="input-group-text" style="background: rgb(195, 227, 238)">With</span>
+            </div>
+            <input class="form-control" aria-label="request" id="request" placeholder="Who are you with?" style="border: 1px solid lightgray" #request>
+          </div>
+        </div>
+        <div class="col-md-12">
+            <label for="video">Decription</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"></span>
+              </div>
+              <input type="text" class="form-control"  aria-describedby="basic-addon3" style="font-size: 17px" placeholder="Title: Ex: The new electric car are" #descriptionTitle>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"></span>
+                </div>
+                <textarea type="text" class="form-control"  aria-describedby="basic-addon3" (keyup)="keyupDescription($event.target.value)" placeholder="..." maxlength="1800" style="font-size: 16px" #descriptionContent></textarea>
+              </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a class="m-3" (click)="openPost()">
+            <label class="custom-file-upload">
+                <input type="file" class="custom-file-input" id="photo" accept="image/*" aria-describedby="photo" style="display: none;" (change)="onSelectFile($event)" #picture>
+                <i class="text-20 i-Windows-2"></i> Upload photo
+            </label>
+        </a>
+        <a class="m-3" (click)="openMovie()"> <i class="text-20 i-Movie"></i> Add movie </a>
+        <a class="m-3" (click)="openRequest()"> <i class="text-20 i-Like"></i> Request </a>
+        <a class="m-3" (click)="openPost()"> <i class="text-20 i-Yes"></i> Feeling </a>
+      </div>
+      <div class="col-md-12" [class.disabled]='!divDisabled'>
+        <button type="button" class="btn btn-primary btn-lg btn-rounded" [disabled]="!url && !video && !strDescription" style="width: 100%" (click)="savePost()">   
+          {{ postButton }} post
+        </button>         
+      </div>
+    </div>
+    <ngx-datatable class="material"  [rows]="post" [columnMode]="'force'" [headerHeight]="0" [footerHeight]="50" [rowHeight]="'auto'" [limit]="15">
+        <ngx-datatable-column prop="content">
+          <ng-template let-column="column" ngx-datatable-header-template></ng-template>
+          <ng-template let-row="row" ngx-datatable-cell-template>
+              <div class="card-header row" (mouseover)="noneDisplayFavorite()">
+                  <div class="col-md-4" style="text-align: left;color: blue">
+                    <i class="i-Add"></i> <small> {{ row.companyName }}</small> <br><span style="color: darkgray">{{ row.category }}, {{ row.country }}</span><br>
+                    <div class="edit_business d-inline-block" ngbDropdown placement="bottom-right" *ngIf="row.id === customerId || role == '1'">
+    
+                      <div class="edit_business" style="margin-top: 3px;" id="dropdownBasic" ngbDropdownToggle>
+                        <img src="../../../../assets/images/post/edit3dot.png">
+                      </div>
+                      
+                      <div ngbDropdownMenu aria-labelledby="dropdownBasic" class="text-center dropdown-image">
+                        <div ngbDropdownItem (click)="editPost(row)">Edit post</div>
+                        <br/>
+                        <div ngbDropdownItem (click)="deletePost(row)">Delete post</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4"><h2>{{row.postTitle}}</h2></div>
+                  <div class="col-md-4" style="text-align: right">
+                    <img src="{{ row.companyLogo }}" class="logo_business" (click)="goToBusiness(row.businessId)" *ngIf="row.companyLogo !== ''">
+                  </div>
+              </div>
+              
+              <div class="card-body" (mouseover)="noneDisplayFavorite()">
+                  <div style="padding-top: 20px;">
+                    <h3 style="color: gray">{{row.postDescriptionTitle}}</h3>
+                    <h5>{{row.postDescription}}</h5>
+                  </div>
+                  <div class="row" *ngIf="row.offerType === 'gold'; else nonGold">
+                    
+                      <img src="{{ row.picture }}" [class]="(row.isPicture != 'none' && row.isVideo != 'none')? 'image-size-harf':'image-size'" *ngIf="row.isPicture != 'none'">
+                      <div [class]="(row.isPicture != 'none' && row.isVideo != 'none')? 'image-size-harf':'image-size'" id="visor-video" *ngIf="row.isVideo != 'none'">
+                        <iframe height="400" width="100%" [src] = "row.video"></iframe>
+                      </div>
+                  </div>
+                  <ng-template #nonGold>
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6">
+                            <img src="{{ row.picture }}" [class]="(row.isPicture != 'none' && row.isVideo != 'none')? 'image-size-harf':'image-size'" *ngIf="row.isPicture != 'none'">
+                            <div [class]="(row.isPicture != 'none' && row.isVideo != 'none')? 'image-size-harf':'image-size'" *ngIf="row.isVideo != 'none'">
+                              <iframe height="400" width="100%" [src] = "row.video"></iframe>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-lg-6">
+                              <!-- <h3 style="color: gray">{{row.postDescriptionTitle}}</h3>
+                              <h5>{{row.postDescription}}</h5> -->
+                          </div>
+                    </div>
+                  </ng-template>
+                  <!-- <div style="padding-top: 20px;" *ngIf="row.offerType === 'gold'">
+                    <h3 style="color: gray">{{row.postDescriptionTitle}}</h3>
+                    <h5>{{row.postDescription}}</h5>
+                  </div> -->
+                  <div style="padding-top: 20px;" class="favorite-divs">
+                    <div>
+                      <img *ngIf="row.countLike > 0" src="../../../../assets/images/post/like.gif" title="{{row.countLike}} users">
+                      <img *ngIf="row.countLove > 0" src="../../../../assets/images/post/love.gif" title="{{row.countLove}} users">
+                      <img *ngIf="row.countHaha > 0" src="../../../../assets/images/post/haha.gif" style="width: 30px;height:30px" title="{{row.countHaha}} users">
+                      <img *ngIf="row.countWow > 0" src="../../../../assets/images/post/wow.gif" style="width: 30px;height:30px" title="{{row.countWow}} usres">
+                      <img *ngIf="row.countSad > 0" src="../../../../assets/images/post/sad.gif" style="width: 35px;height:35px" title="{{row.countSad}} users">
+                      <img *ngIf="row.countAngry > 0" src="../../../../assets/images/post/angry.gif" title="{{row.countAngry}} users">
+                      <span *ngIf="row.countAll > 0 && row.myFavorite" style="font-size: 20px">You and {{ row.countAll }} ohters</span>
+                      <span *ngIf="row.countAll > 0 && !row.myFavorite" style="font-size: 20px">{{ row.countAll }}</span>
+                    </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-5 like-img" id="{{ row._id }}" (mouseleave)="noneDisplayFavorite()">
+                      <button (click)="favorite(row._id, 'like', modalFavorite)" style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none">
+                          <img src="../../../../assets/images/post/like.gif" class="like" title="Like">
+                      </button>
+                      <button (click)="favorite(row._id, 'love', modalFavorite)" title="Love" style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none">
+                          <img src="../../../../assets/images/post/love.gif" class="love">
+                      </button>
+                      <button (click)="favorite(row._id, 'haha', modalFavorite)" style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none">
+                          <img src="../../../../assets/images/post/haha.gif" class="haha" style="width: 35px;height: 35px" title="Haha">
+                      </button>
+                      <button (click)="favorite(row._id, 'wow', modalFavorite)" style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none">
+                          <img src="../../../../assets/images/post/wow.gif" class="wow" style="width: 35px;height: 35px" title="Wow">
+                      </button>
+                      <button (click)="favorite(row._id, 'sad', modalFavorite)" style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none">
+                          <img src="../../../../assets/images/post/sad.gif" class="sad" style="width: 40px;height: 40px" title="Sad">
+                      </button>
+                      <button (click)="favorite(row._id, 'angry', modalFavorite)" style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none">
+                          <img src="../../../../assets/images/post/angry.gif" class="angry" title="Angry">
+                      </button>
+                      
+                  </div>
+                  <div class="col-md-7"></div>
+              </div>
+              <div class="card-footer">
+                  <a (click)="toggleFavorite(row._id, row.myFavorite)" title="Add to My Favorite list" (mouseover)="displayFavorite(row._id)"> <i class="{{ row.favoriteButtonClass }}"></i>  {{row.favoriteButton}} </a>
+                  <!-- <ng-template #myself> *ngIf="row.id !== customerId; else myself" // {{ row.favoriteButton }}
+                    <a title="Add to My Favorite list" style="color: lightblue"> <i class="text-20 i-Like"></i> Add to My Favorite </a>
+                  </ng-template> -->
+                  <a (click)="showComment(row._id)" title="Add a Comment" (mouseover)="noneDisplayFavorite()"> <i class="text-20 i-Yes"></i> Comments </a>
+                  <a (click)="sendRecommend(row._id, row.id, row.myRecommend, content)" title="Send as a recommendation" (mouseover)="noneDisplayFavorite()" *ngIf="row.id !== customerId">
+                    <button [disabled]="row.sendRecomContent == 'Send recommendation'" style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none;">
+                        <i class="text-20 i-Mail-Favorite"></i> 
+                        <span class="badge badge-pill badge-info badge-position">{{row.countRecomment}}</span> &nbsp;&nbsp;
+                        {{row.sendRecomContent}} 
+                    </button>
+                  </a>
+              </div>
+              <div (mouseover)="noneDisplayFavorite()">                             
+                <div *ngIf="selectedCommentId === row._id">
+                    <ul style="list-style-type: none; padding: 20px 0 0 20px" *ngFor="let comment of row.postComments" class="row">
+                        <div class="col-md-12">
+                          <div class="row">
+                            <div style="width: 50px;">
+                              <img src="{{comment.commentUserPicture}}" alt="" title="{{comment.commentUserName}}" class="businessAvatar">
+                            </div>              
+                            <div class="col-md-3">
+                              <p class="comment-form">{{comment.comment}}</p>
+                            </div>
+                          </div>
+                        </div>
+                    </ul>
+                </div>
+                <div class="col-md-12" [class.disabled]="selectedCommentId !== row._id && row.id !== customerId">
+                    <div class="row" style="padding: 20px">
+                      <div style="width: 50px;">
+                        <img src="{{ userPicture }}" alt="" class="businessAvatar">
+                      </div>
+                      <div class="col-md-11">
+                        <input type="text" class="form-control form-control-rounded margin" id="comment_{{row._id}}" (keyup.enter)="comment(row._id, $event.target.value)" placeholder="Write a comment"
+                          style="float:left;">
+                      </div>
+                    </div>
+                </div>
+              </div>
+          </ng-template>
+        </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
+  
+  <div class="col-md-3 content-right  make-me-sticky">
+    <!-- <div class="row" style="margin-top: 20px;">
+      <div class="col-md-2 item-position border-right">
+        <i class="nav-icon i-size i-Bell"></i>
+      </div>
+      <div class="col-md-5 font-position border-right"  style="justify-content: space-around; display: flex;" ngbDropdown>
+        <i class="i-Arrow-Down" ngbDropdownToggle></i> &nbsp;
+          Yuri in Moscow 
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="text-center dropdown-image">
+          <div ngbDropdownItem> <a> Alex in Moscow </a></div>
+          <div ngbDropdownItem> <a> Kiril in Krasno </a></div>
+          <div ngbDropdownItem> <a> Novikove in Moscow </a></div>
+          <div ngbDropdownItem> <a> David in NYC </a></div>
+          <div ngbDropdownItem> <a> Alexey in Kiev </a></div>
+          <div ngbDropdownItem> <a> Kiril in Krasno </a></div>
+          <div ngbDropdownItem> <a> David in NYC </a></div>
+          <div ngbDropdownItem> <a> Alexey in Kiev </a></div>
+          <div ngbDropdownItem> <a> Novikove in Moscow </a></div>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <input class="form-control form-control-rounded" id="search" placeholder="Search alrams" type="email">
+      </div>
+    </div> -->
+
+    <div class="row">
+
+      <ngx-datatable class="material col-md-12 col-sm-12 col-lg-12" [rows]="alarms" [columnMode]="'force'" [headerHeight]="55" [footerHeight]="50" [rowHeight]="'80'" [limit]="15">
+            <ngx-datatable-column [width]="260" prop="fromto">
+                
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <div>F: Favorite,R: Recommend, M: Message</div>
+                <div class="inline-div">
+                  <div><span class="badge badge-primary">{{countFavorite}}</span><span> F </span></div>
+                  <div><span class="badge badge-primary">{{countRecommend}}</span><span> R </span></div>
+                  <div><span class="badge badge-primary">{{countMessages}}</span><span > M </span></div>
+                </div>
+              </ng-template>
+              <ng-template let-row="row" style="text-align: center" ngx-datatable-cell-template>
+                  <a style="text-decoration: underline;color: blue">{{row.from}} </a>to <a style="text-decoration: underline;">{{row.to}}</a>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="leads">
+                
+              <ng-template let-column="column" ngx-datatable-header-template>
+                  <div>L: Leads</div>
+                <div class="col-sm-12 col-md-12"><span class="badge badge-primary">{{countLeads}}</span><span> L </span></div>
+              </ng-template>
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <div class="col-sm-12 col-md-12">
+                    <button type="button" class="btn btn-primary" [disabled]="row.status === 1" (click)="confirm(row._id, row.requestUserId)">
+                      Accept
+                    </button>
+                </div>
+                <div class="col-sm-12 col-md-12">
+                    <button type="button" class="btn btn-default" [disabled]="row.status === -1" (click)="delete(row._id, row.requestUserId)">
+                        Delete
+                    </button>
+                </div>
+                 
+              </ng-template>
+              
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="all">
+                
+              <ng-template let-column="column" ngx-datatable-header-template>
+                  <div>A: All</div>
+                <span class="badge badge-primary">{{countAll}}</span><span> A </span>
+              </ng-template>
+              <ng-template let-row="row" style="text-align: center" ngx-datatable-cell-template >
+                <img src="{{row.picture}}" alt="" style="margin: auto" class="businessAvatar">
+              </ng-template>
+            </ngx-datatable-column>
+        </ngx-datatable>
+    </div>    
+  </div>
+</div>
+<ng-template #openModal class="modal-dialog">
+  <div class="modal-header">
+    <div style="width: 36px; height: 32px;">
+      <i class="text-20 i-Like" style="color: #0fe668; cursor: pointer;"
+        id="modal-title"></i> &nbsp;
+      <span class="badge badge-success badge-position">12</span>
+    </div>
+  </div>
+  <div class="modal-body" aria-hidden="true">
+    <div class="col-md-12" style="margin-bottom: 10px;" *ngFor="let modal of modals">
+      <img src="{{modal.picture}}" style="cursor: pointer;" alt="" class="businessAvatar">
+      <a style="padding: 10px;"> {{ modal.name }} </a>
+    </div>
+  </div>
+  <div class="modal-footer">
+  </div>
+</ng-template>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Check Businesses</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" aria-hidden="true">
+    <div class="col-md-12" style="margin-bottom: 10px;" *ngFor="let modal of modals">
+      <img src="{{modal.businessPicture}}" style="cursor: pointer;" alt="" class="businessAvatar" *ngIf="selectedUserId !== modal.userId">
+      <a style="padding: 10px;" *ngIf="selectedUserId !== modal.userId"> {{ modal.businessName }} </a>
+      <input type="checkbox" [(ngModel)]="modal.isChecked" *ngIf="selectedUserId !== modal.userId" (change)="onChange(modal, $event.target.checked)" (mouseover)="checkBoxFilter(modal.isChecked)" style="float: right">
+    </div>
+    <div *ngIf="businessFriendsCount === 0">
+      <h3 style="color: lightblue;text-align: center">You have no data of your friends' businesses yet.</h3><br><br>
+      <h3 style="text-align: center">Can you only send a recommendation with your business?</h3>
+    </div>
+    <div style="clear: both"></div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Submit</button>
+  </div>
+</ng-template>
+
+<ng-template #modalFavorite let-modal>
+  <div class="modal-header">
+    <!-- <h4 class="modal-title" id="modal-basic-title">Confirm Dialog</h4> -->
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" style="height: auto; overflow-y: hidden;">
+    Add to favorites?
+  </div>
+  <div class="modal-footer">
+    <button type="button"  class="btn btn-outline-dark btn-rounded" (click)="modal.close('ok')">Yes</button>
+    <button type="button"  class="btn btn-outline-dark btn-rounded" (click)="modal.dismiss('Cross click')">Cancel</button>
+  </div>
+</ng-template>
+<!-- <ngx-spinner
+  bdColor="#fff"
+  size="medium"
+  color="rgba(51,51,51,0.8)"
+  type="ball-scale-multiple">
+ <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner> -->

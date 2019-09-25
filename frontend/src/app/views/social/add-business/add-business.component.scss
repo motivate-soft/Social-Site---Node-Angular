@@ -1,0 +1,18 @@
+.feedback-error{
+    color: red;
+}
+
+.addBusinessForm{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.form-control {
+    height: initial !important;
+}
+
+.color-picker .opened .colors .circle{
+    flex: 40px 0 0 !important;
+    margin-right: 10px !important;
+    margin-bottom: 10px !important;
+}

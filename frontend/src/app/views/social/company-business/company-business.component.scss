@@ -1,0 +1,45 @@
+i {
+    font-size: 32px;
+    height: 32px;
+    width: 32px;
+    float: right;
+    cursor: pointer;
+}
+.row {
+    padding-bottom: 20px;
+}
+
+.card {
+    background: #FFF;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.card-title {
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+}
+
+.ngx-datatable.material {
+    background: #FFF;
+    box-shadow: 0 5px 5px -3px rgba(245, 243, 243, 0), 0 8px 10px 1px rgba(248, 244, 244, 0.14), 0 3px 14px 2px rgba(247, 244, 244, 0.12);
+}
+
+.side {
+    min-height: 714px;
+}
+
+.card-img-top {
+    height: 450px;
+}
+
+@media screen and (max-width : 600px){
+    .card-img-top {
+        height: 300px;
+    }
+}
+
+@media (max-width: 991px){
+    .card-img-top {
+        height: 400px;
+    }
+}

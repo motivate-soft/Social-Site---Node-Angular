@@ -1,0 +1,178 @@
+<div class="breadcrumb">
+    <h1>Business Settings</h1>
+
+</div>
+
+<div class="separator-breadcrumb border-top"></div>
+
+<div class="row">
+
+
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="card-title mb-3">
+                    <span>Add Business</span>
+                </div>
+                <div class="row">
+                    <form [formGroup]="addBusinessForm" class="addBusinessForm">
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="category">Category</label>
+                            <select class="form-control form-control-rounded" formControlName="category"
+                                    (ngModelChange)="validate()">
+                                <option *ngFor="let categoryitem of categoryArr" [value]="categoryitem.name">
+                                    {{categoryitem.name}}
+                                </option>
+                            </select>
+                            <label *ngIf="submitted && f.category.errors && f.category.errors.required"
+                                   class="feedback-error">Category is required</label>
+                        </div>
+
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="min">Business Name</label>
+                            <input type="text"  formControlName="businessName"
+                                   class="form-control form-control-rounded" id="businessName"
+                                   (ngModelChange)="validate()"
+                                   placeholder="Enter the business name">
+                            <label *ngIf="submitted && f.businessName.errors && f.businessName.errors.required" class="feedback-error">Business name is required</label>
+                            <label *ngIf="submitted && f.businessName.errors && f.businessName.errors.maxlength" class="feedback-error">Business ame cannot be more than 20 characters long</label>
+                        </div>
+
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="country">Country</label>
+                            <!-- <input type="text" [(ngModel)]="addUserData.country"  class="form-control form-control-rounded" id="country" placeholder="Enter Country"> -->
+                            <select class="form-control form-control-rounded" formControlName="country">
+                                <option *ngFor="let country of countryArr" [value]="country.name">{{country.name}}
+                                </option>
+                            </select>
+                            <label *ngIf="submitted && f.country.errors && f.country.errors.required" class="feedback-error">Country is required</label>
+                        </div>
+
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="city">City</label>
+                            <input type="text" formControlName="city" (ngModelChange)="validate()" class="form-control form-control-rounded" id="city" placeholder="Enter City">
+                            <label *ngIf="submitted && f.city.errors && f.city.errors.required" class="feedback-error">City is required</label>
+                        </div>
+
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="email">Email</label>
+                            <input type="email" formControlName="email" (ngModelChange)="validate()" class="form-control form-control-rounded" id="email" placeholder="Enter Email">
+                            <label *ngIf="submitted && f.email.errors && f.email.errors.required" class="feedback-error">Email is required</label>
+                            <label *ngIf="submitted && f.email.errors && f.email.errors.pattern" class="feedback-error">Enter a valid email</label>
+                        </div>
+
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="phone">Phone</label>
+                            <input class="form-control form-control-rounded" id="phone" [textMask]="{mask: phoneMask}" formControlName="phone" placeholder="(972) 546-1234-55" (ngModelChange)="validate()">
+                            <label *ngIf="submitted && f.phone.errors && f.phone.errors.required" class="feedback-error">Phone is required</label>
+                        </div>
+
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="address">Address</label>
+                            <input type="text" formControlName="address" (ngModelChange)="validate()" class="form-control form-control-rounded" id="address" placeholder="Enter Business Address">
+                            <label *ngIf="submitted && f.address.errors && f.address.errors.required" class="feedback-error">Address is required</label>
+                        </div>
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="facebook">FaceBook</label>
+                            <input type="text" formControlName="facebook" (ngModelChange)="validate()" class="form-control form-control-rounded" id="faceBook" placeholder="Enter Facebook URL">
+                            <label *ngIf="submitted && f.facebook.errors && f.facebook.errors.required" class="feedback-error">Facebook is required</label>
+                        </div>
+
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="linkdin">Linkdin</label>
+                            <input type="text" formControlName="linkdin" (ngModelChange)="validate()" class="form-control form-control-rounded" id="Linkdin" placeholder="Enter Linkdin URL">
+                            <label *ngIf="submitted && f.linkdin.errors && f.linkdin.errors.required" class="feedback-error">Linkdin is required</label>
+                        </div>
+
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="logo">Business Logo</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" accept="image/*" id="logo" 
+                                           aria-describedby="logo" (change)="onFileSelected($event, 'logo')">
+                                    <label class="custom-file-label" for="logo">{{chooseLogoFileName}}</label>
+                                </div>
+
+                            </div>
+                            <label *ngIf="submitted && chooseLogo === ''" class="feedback-error">Logo is required</label>
+                            <label class="feedback-error" *ngIf="fileType">You must choose image files</label>
+
+                        </div>
+
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="picture">Business Picture</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="businesspicture">Upload</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" accept="image/*" id="picture" 
+                                           aria-describedby="picture" (change)="onFileSelected($event, 'picture')">
+                                    <label class="custom-file-label" for="picture">{{choosePictureName}}</label>
+                                </div>
+
+                            </div>
+                            <label *ngIf="submitted && choosePicture === ''" class="feedback-error">Picture is required</label>
+                            <label class="feedback-error" *ngIf="fileType">You must choose image files</label>
+
+                        </div>
+
+                        <div class="col-md-12 form-group mb-3">
+                            <label for="Description">Description</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Description</span>
+                                </div>
+                                <textarea class="form-control" aria-label="Description" formControlName="Description"
+                                          (ngModelChange)="validate()"></textarea>
+                            </div>
+                            <label *ngIf="submitted && f.Description.errors && f.Description.errors.required"
+                                   class="feedback-error">Description is required</label>
+                        </div>
+
+                        <div class="col-md-6">
+                            <button type="button" 
+                                    class="btn {{isUpdate ? 'btn-info' : 'btn-success'}}  btn-lg btn-rounded m-1" (click)="addItem()">
+                                <i class="i-Data-Save"></i>&nbsp; {{isUpdate ? 'Update' : 'Save'}}
+                            </button>
+                            <img *ngIf="loading" class="pl-3" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                            <button type="button" class="btn btn-warning btn-lg btn-rounded m-1" (click)="cancel()">
+                                <i class="i-Left"></i>&nbsp; Cancel
+                            </button>
+                            <!-- <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Submit</btn-loading> -->
+                        </div>
+
+                        <button class="btn btn-outline-primary btn-rounded" [hidden]="true" #smallModal_view
+                                [class.show]="false" (click)="openSmall(modalSmall)">Launch Modal
+                        </button>
+
+                    </form>
+                    <ng-template #modalSmall let-modal>
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modal-basic-title">{{modal_title}}</h4>
+                            <button type="button" class="close" aria-label="Close"
+                                    (click)="modal.dismiss('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>{{modal_content}}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark btn-rounded" (click)="closeModal()">Ok
+                            </button>
+                            <button type="button" id="closebutton" #closeModal_view [hidden]="true" [class.show]="false"
+                                    class="btn btn-outline-dark btn-rounded" (click)="modal.close('ok')">Ok
+                            </button>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

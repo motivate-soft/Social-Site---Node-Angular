@@ -1,0 +1,264 @@
+<h1> Private Business Page </h1>
+<div class="separator-breadcrumb border-top"></div>
+
+<!-- [selectionType]="'row'" (select)="slideClick($event)" -->
+<div class="col-md-6 content-right">
+  <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">Contacted Companies <i class="i-Add" (click)="openModal(modalMarket)" title="Add"> </i></div>
+            <ngx-datatable #table class='material' [columns]="columns_contacted_companies" [columnMode]="'force'" [headerHeight]="50"
+              [footerHeight]="50" [rowHeight]="'auto'" [limit]="10" [rows]='contacted_companies'>
+            </ngx-datatable>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title"> Reads <i class="i-Add" (click)="openModal(modalLists)" title="Add"> </i>
+          </div>
+          <ngx-datatable #table class='material' [columns]="columns_reads" [columnMode]="'force'" [headerHeight]="50"
+            [footerHeight]="50" [rowHeight]="'auto'" [limit]="10" [rows]='reads'>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title"> Deals <i class="i-Add" (click)="openModal(modalLists)" title="Add"> </i>
+          </div>
+          <ngx-datatable #table class='material' [columns]="columns_deals" [columnMode]="'force'" [headerHeight]="50"
+            [footerHeight]="50" [rowHeight]="'auto'" [limit]="10" [rows]='deals'>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-6 content-left">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title"> Favorites <i class="i-Add" (click)="openModal(modalLists)" title="Add"> </i> </div>
+          
+          <ngx-datatable class="material"  [rows]="posts" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="auto" [limit]="10">
+              <ngx-datatable-column prop="content">
+                <ng-template let-column="column" ngx-datatable-header-template>Post name</ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{row.postTitle}}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="content">
+                  <ng-template let-column="column" ngx-datatable-header-template>Number</ng-template>
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    <div class="m-0 d-flex align-items-center">
+                        <div>
+                            <img *ngIf="row.countLike > 0" src="../../../../assets/images/post/like.gif" style="width: 45px;height:45px;" title="{{row.countLike}} users">
+                            <img *ngIf="row.countLove > 0" src="../../../../assets/images/post/love.gif" style="width: 45px;height:45px;margin-left: -15px" title="{{row.countLove}} users">
+                            <img *ngIf="row.countHaha > 0" src="../../../../assets/images/post/haha.gif" style="width: 32px;height:32px;margin-left: -15px" title="{{row.countHaha}} users">
+                            <img *ngIf="row.countWow > 0" src="../../../../assets/images/post/wow.gif" style="width: 32px;height:32px;margin-left: -15px" title="{{row.countWow}} usres">
+                            <img *ngIf="row.countSad > 0" src="../../../../assets/images/post/sad.gif" style="width: 45px;height:45px;margin-left: -15px" title="{{row.countSad}} users">
+                            <img *ngIf="row.countAngry > 0" src="../../../../assets/images/post/angry.gif" style="width: 45px;height:45px;margin-left: -15px" title="{{row.countAngry}} users">
+                            <span *ngIf="row.countAll > 0" style="font-size: 22px">{{ row.countAll }}</span>
+                        </div>
+                    </div>
+                      
+                  </ng-template>
+                </ngx-datatable-column>
+              <ngx-datatable-column prop="content">
+                <ng-template let-column="column" ngx-datatable-header-template>Link</ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <div class="row">
+                    <div class="col-sm-12"><a (click)="goToPost(row._id)">{{row._id}}</a></div>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="content">
+                <ng-template let-column="column" ngx-datatable-header-template>Option</ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <button (click)="deleteFavorite(modalFavoriteDelete, row._id)" style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none;">Delete</button>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title"> Recommendation <i class="i-Add" (click)="openModal(modalLists)" title="Add"> </i> </div>
+          <ngx-datatable class="material"  [rows]="postRecommends" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="auto" [limit]="10">
+            <ngx-datatable-column prop="content">
+              <ng-template let-column="column" ngx-datatable-header-template>Name</ng-template>
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row.postTitle}}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="content">
+                <ng-template let-column="column" ngx-datatable-header-template>Recommendation Number</ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{row.postRecommend.length}}
+                </ng-template>
+              </ngx-datatable-column>
+            <ngx-datatable-column prop="content">
+              <ng-template let-column="column" ngx-datatable-header-template>Recommendation Link</ng-template>
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <div class="row">
+                  <div class="col-sm-12"><a (click)="goToPost(row._id)">{{row._id}}</a></div>
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="content">
+              <ng-template let-column="column" ngx-datatable-header-template>Option</ng-template>
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <button (click)="deleteRecommend(modalFavoriteDelete, row._id)" style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none;">Delete</button>
+                  </div>
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
+        </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalMarket let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form novalidate="" class="ng-untouched ng-pristine ng-valid">
+      <div class="form-group">
+        <label for="picker1">Name: </label>
+        <input type="text" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="picker1">Number: </label>
+        <input type="text" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="picker1">Link: </label>
+        <input type="text" class="form-control">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close('ok')">Ok</button>
+  </div>
+</ng-template>
+<ng-template #modalEvents let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form novalidate="" class="ng-untouched ng-pristine ng-valid">
+      <div class="form-group">
+        <label for="picker1">Name: </label>
+        <input type="text" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="picker1">Link: </label>
+        <input type="text" class="form-control">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close('ok')">Ok</button>
+  </div>
+</ng-template>
+<ng-template #modalLists let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form novalidate="" class="ng-untouched ng-pristine ng-valid">
+      <div class="form-group">
+        <label for="picker1">Name: </label>
+        <input type="text" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="picker1">Role: </label>
+        <input type="text" class="form-control">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close('ok')">Ok</button>
+  </div>
+</ng-template>
+<ng-template #modalProductAdd let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form novalidate="" class="ng-untouched ng-pristine ng-valid">
+      <label for="image">Image</label>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+        </div>
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" accept="image/*" id="photo" aria-describedby="photo"
+            (change)="onFileSelected($event)">
+          <label class="custom-file-label" for="photo">{{chooseFileName}}</label>
+        </div>
+      </div>
+      <label class="feedback-error" *ngIf="fileType">You must choose image files</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Comments</span>
+        </div>
+        <textarea class="form-control" aria-label="Comments"></textarea>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close('ok')">Ok</button>
+  </div>
+</ng-template>
+
+<ng-template #modalFavoriteDelete let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Confirm Dialog</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      Are you sure?
+    </div>
+    <div class="modal-footer">
+      <button type="button"  class="btn btn-outline-dark btn-rounded" (click)="modal.close('ok')">Delete</button>
+      <button type="button"  class="btn btn-outline-dark btn-rounded" (click)="modal.dismiss('Cross click')">Cancel</button>
+    </div>
+</ng-template> 
